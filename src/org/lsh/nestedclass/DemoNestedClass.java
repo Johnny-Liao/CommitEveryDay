@@ -1,5 +1,10 @@
 package org.lsh.nestedclass;
 
+/**
+ * 简单罗列各种内部类的不同用法
+ * 
+ * @author JohnnyLiao
+ */
 @SuppressWarnings("unused")
 public class DemoNestedClass {
 	// 静态内部类
@@ -21,7 +26,6 @@ public class DemoNestedClass {
 
 		// 匿名内部类
 		Runnable runnable = new Runnable() { // 两个作用：定义了匿名内部类的类体；创建了匿名内部类的一个实例！
-
 			@Override
 			public void run() {
 
