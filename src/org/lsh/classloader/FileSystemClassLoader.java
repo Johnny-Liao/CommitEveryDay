@@ -27,8 +27,9 @@ public class FileSystemClassLoader extends ClassLoader {
 			ClassLoader parent = this.getParent(); // 获取父类加载器
 			try {
 				c = parent.loadClass(name); // 委派给父类加载
+				System.out.println("父类加载处理！");
 			} catch (Exception e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 
 			if (c != null) {
