@@ -7,8 +7,8 @@ package org.lsh.nestedclass;
  */
 @SuppressWarnings("unused")
 public class DemoNestedClass {
-	// 静态内部类
 
+	// 静态内部类
 	private static class StaticNestedClassClass {
 
 	}
