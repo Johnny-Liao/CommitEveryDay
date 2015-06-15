@@ -8,12 +8,12 @@ package org.lsh.nestedclass;
 @SuppressWarnings("unused")
 public class DemoNestedClass {
 
-	// 静态内部类
+	// 静态(成员)内部类
 	private static class StaticNestedClassClass {
 
 	}
 
-	// 普通内部类(成员内部类)
+	// 普通内部类(成员内部类/非静态成员内部类)
 	private class FieldInnerClass {
 
 	}
