@@ -19,7 +19,7 @@ public class SortTest {
 	public static void main(String[] args) {
 		DataWrap[] data = data();
 		
-		System.out.println("排序之前：\n" + Arrays.toString(data));
+/*		System.out.println("排序之前：\n" + Arrays.toString(data));
 		SelectSort.selectSort(data);
 		System.out.println("排序之后：\n" + Arrays.toString(data));
 		System.out.println();
@@ -40,13 +40,14 @@ public class SortTest {
 		System.out.println("排序之前：\n" + Arrays.toString(data));
 		BubbleSort.bubbleSort(data);
 		System.out.println("排序之后：\n" + Arrays.toString(data));
-		System.out.println();
+		System.out.println();*/
 		
 		data = data();
 		System.out.println("排序之前：\n" + Arrays.toString(data));
-		QuickSort.quickSort(data);
+		QuickSort.quickSort(data, 0, data.length -1);
 		System.out.println("排序之后：\n" + Arrays.toString(data));
 		System.out.println();
+		
 		
 	}
 }

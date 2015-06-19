@@ -22,7 +22,7 @@ public class DataWrap implements Comparable<DataWrap> {
 	@Override
 	// 根据data实例变量来决定两个DataWrap的大小
 	public int compareTo(DataWrap dw) {
-		return this.data > dw.data ? 1 : (this.flag == dw.flag ? 0 : -1);
+		return this.data > dw.data ? 1 : (this.data == dw.data ? 0 : -1); 
 	}
 
 }
