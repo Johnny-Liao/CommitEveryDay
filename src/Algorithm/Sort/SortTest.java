@@ -36,5 +36,17 @@ public class SortTest {
 		System.out.println("排序之后：\n" + Arrays.toString(data));
 		System.out.println();
 		
+		data = data();
+		System.out.println("排序之前：\n" + Arrays.toString(data));
+		BubbleSort.bubbleSort(data);
+		System.out.println("排序之后：\n" + Arrays.toString(data));
+		System.out.println();
+		
+		data = data();
+		System.out.println("排序之前：\n" + Arrays.toString(data));
+		QuickSort.quickSort(data);
+		System.out.println("排序之后：\n" + Arrays.toString(data));
+		System.out.println();
+		
 	}
 }
