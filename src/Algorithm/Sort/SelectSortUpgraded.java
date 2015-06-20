@@ -3,7 +3,7 @@ package Algorithm.Sort;
 import java.util.Arrays;
 
 /**
- * 升级版选择排序，使每次排序时数据交换次数较少为1，即空间复杂度为：O(1)
+ * 升级版选择排序，使每次排序时数据交换次数减少为1，即空间复杂度为：O(1)
  * 
  * @author JohnnyLiao
  */
