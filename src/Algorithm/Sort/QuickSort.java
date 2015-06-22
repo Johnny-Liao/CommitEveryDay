@@ -7,7 +7,12 @@ import java.util.Arrays;
  * 
  * @author JohnnyLiao
  */
-public class QuickSort {
+public class QuickSort implements Sort {
+	
+	@Override
+	public void sort(DataWrap[] data) {
+		quickSort(data);
+	}
 	
 	public static void quickSort(DataWrap[] data) {
 		System.out.println("¿ìËÙÅÅĞò£º");

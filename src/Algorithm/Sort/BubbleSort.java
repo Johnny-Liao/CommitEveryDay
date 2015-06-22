@@ -7,8 +7,13 @@ import java.util.Arrays;
  * 
  * @author JohnnyLiao
  */
-public class BubbleSort {
+public class BubbleSort implements Sort {
 
+	@Override
+	public void sort(DataWrap[] data) {
+		bubbleSort(data);
+	}
+	
 	public static void bubbleSort(DataWrap[] data) {
 		System.out.println("√∞≈›≈≈–Ú£∫");
 		for (int i = 0; i < data.length - 1; i++) {

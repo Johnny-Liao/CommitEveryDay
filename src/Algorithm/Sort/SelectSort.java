@@ -8,7 +8,7 @@ import java.util.Arrays;
  * @author JohnnyLiao
  * 
  */
-public class SelectSort {
+public class SelectSort implements Sort {
 
 	public static void selectSort(DataWrap[] data) {
 		System.out.println("选择排序：");
@@ -23,6 +23,11 @@ public class SelectSort {
 			// 每次排序输出一次，便于查看排序过程
 			System.out.println(Arrays.toString(data));
 		}
+	}
+
+	@Override
+	public void sort(DataWrap[] data) {
+		selectSort(data);
 	}
 
 }

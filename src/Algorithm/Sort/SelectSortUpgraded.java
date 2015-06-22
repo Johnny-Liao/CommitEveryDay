@@ -7,7 +7,8 @@ import java.util.Arrays;
  * 
  * @author JohnnyLiao
  */
-public class SelectSortUpgraded {
+public class SelectSortUpgraded implements Sort {
+	
 	public static void selectSortUpgrade(DataWrap[] data) {
 		System.out.println("…˝º∂∞Ê—°‘Ò≈≈–Ú£∫");
 		for (int i = 0; i < data.length -1; i++) {
@@ -25,5 +26,10 @@ public class SelectSortUpgraded {
 			}
 			System.out.println(Arrays.toString(data));
 		}
+	}
+
+	@Override
+	public void sort(DataWrap[] data) {
+		selectSortUpgrade(data);
 	}
 }

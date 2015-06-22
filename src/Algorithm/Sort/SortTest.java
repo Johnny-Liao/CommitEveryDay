@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class SortTest {
 	
-	private static DataWrap[] data() {
+	private static DataWrap[] getData() {
 		DataWrap[] data = {
 				new DataWrap(21, ""),
 				new DataWrap(30, ""),
@@ -19,39 +19,26 @@ public class SortTest {
 		};
 		return data;
 	}
+	
+	private static void testDiffSort(Sort sort) {
+		DataWrap[] data = getData();
+		System.out.println("排序之前：\n" + Arrays.toString(data));
+		sort.sort(data);
+		System.out.println("排序之后：\n" + Arrays.toString(data));
+		System.out.println();
+	}
 
 	public static void main(String[] args) {
-		DataWrap[] data = data();
 		
-		System.out.println("排序之前：\n" + Arrays.toString(data));
-		SelectSort.selectSort(data);
-		System.out.println("排序之后：\n" + Arrays.toString(data));
-		System.out.println();
+		testDiffSort(new SelectSort());
 		
-		data = data();
-		System.out.println("排序之前：\n" + Arrays.toString(data));
-		SelectSortUpgraded.selectSortUpgrade(data);
-		System.out.println("排序之后：\n" + Arrays.toString(data));
-		System.out.println();
+		testDiffSort(new SelectSortUpgraded());
 		
-		data = data();
-		System.out.println("排序之前：\n" + Arrays.toString(data));
-		HeapSort.heapSort(data);
-		System.out.println("排序之后：\n" + Arrays.toString(data));
-		System.out.println();
+		testDiffSort(new HeapSort());
 		
-		data = data();
-		System.out.println("排序之前：\n" + Arrays.toString(data));
-		BubbleSort.bubbleSort(data);
-		System.out.println("排序之后：\n" + Arrays.toString(data));
-		System.out.println();
+		testDiffSort(new BubbleSort());
 		
-		data = data();
-		System.out.println("排序之前：\n" + Arrays.toString(data));
-		QuickSort.quickSort(data);
-		System.out.println("排序之后：\n" + Arrays.toString(data));
-		System.out.println();
-		
+		testDiffSort(new QuickSort());
 		
 	}
 }

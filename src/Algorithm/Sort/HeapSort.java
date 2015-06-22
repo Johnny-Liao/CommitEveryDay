@@ -8,7 +8,7 @@ import java.util.Arrays;
  * @author JohnnyLiao
  */
 
-public class HeapSort {
+public class HeapSort implements Sort {
 
 	public static void heapSort(DataWrap[] data) {
 		System.out.println("∂—≈≈–Ú£∫");
@@ -50,5 +50,10 @@ public class HeapSort {
 		DataWrap tmp = data[start];
 		data[start] = data[end];
 		data[end] = tmp;
+	}
+
+	@Override
+	public void sort(DataWrap[] data) {
+		heapSort(data);
 	}
 }
