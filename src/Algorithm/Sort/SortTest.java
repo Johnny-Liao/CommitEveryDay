@@ -40,5 +40,9 @@ public class SortTest {
 		
 		testDiffSort(new QuickSort());
 		
+		testDiffSort(new InsertSort());
+		
+		testDiffSort(new BinaryInsertSort());
+		
 	}
 }
