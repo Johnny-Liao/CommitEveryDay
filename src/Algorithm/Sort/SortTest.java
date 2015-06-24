@@ -43,6 +43,8 @@ public class SortTest {
 		testDiffSort(new InsertSort());
 		
 		testDiffSort(new BinaryInsertSort());
+
+		testDiffSort(new ShellSort());
 		
 	}
 }
