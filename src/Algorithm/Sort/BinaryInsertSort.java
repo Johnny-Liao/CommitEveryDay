@@ -2,6 +2,11 @@ package Algorithm.Sort;
 
 import java.util.Arrays;
 
+/**
+ * ’€∞Î≤Â»Î≈≈–Ú
+ * 
+ * @author JohnnyLiao
+ */
 public class BinaryInsertSort implements Sort {
 
 	public static void binaryInsertSort(DataWrap[] data) {
