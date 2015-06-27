@@ -46,5 +46,7 @@ public class SortTest {
 
 		testDiffSort(new ShellSort());
 		
+		testDiffSort(new MergeSort());
+		
 	}
 }
