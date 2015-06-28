@@ -30,7 +30,7 @@ public class SortTest {
 
 	public static void main(String[] args) {
 		
-		testDiffSort(new SelectSort());
+/*		testDiffSort(new SelectSort());
 		
 		testDiffSort(new SelectSortUpgraded());
 		
@@ -44,7 +44,7 @@ public class SortTest {
 		
 		testDiffSort(new BinaryInsertSort());
 
-		testDiffSort(new ShellSort());
+		testDiffSort(new ShellSort());*/
 		
 		testDiffSort(new MergeSort());
 		

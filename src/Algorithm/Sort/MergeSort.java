@@ -18,8 +18,9 @@ public class MergeSort implements Sort {
 	private static void resolve(DataWrap[] data, int left, int right) {
 		if (left < right) {
 			int center = (left + right) / 2;
+			
 			resolve(data, left, center);
-			resolve(data, center + 1, left);
+			resolve(data, center + 1, right);		// be careful this is 'right' you have wrong write 'left'
 			
 			merge(data, left, center, right);
 			
@@ -36,6 +37,7 @@ public class MergeSort implements Sort {
 	 */
 	private static void merge(DataWrap[] data, int left, int center, int right) {
 		DataWrap[] tmpArr = new DataWrap[data.length];
+		int tmp = left;		//后面用来把中间数组复制回原数组
 		int rightIndex = center + 1;
 		// 中间数组的索引
 		int tmpIndex = left;
@@ -55,9 +57,10 @@ public class MergeSort implements Sort {
 			tmpArr[tmpIndex++] = data[left++];
 		}
 		// 将中间数组中的内容复制回原数组
-		int tmp = left;
+//		int tmp = left;					严重错误-在上面的操作已经改变left的值
 		while (tmp <= right) {
-			data[tmp] = tmpArr[tmp++];
+			data[tmp] = tmpArr[tmp];
+			tmp++;
 		}
 	} 
 
