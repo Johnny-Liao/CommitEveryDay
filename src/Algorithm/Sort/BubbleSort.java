@@ -33,5 +33,27 @@ public class BubbleSort implements Sort {
 			}
 		}
 	}
+
+	/**
+	 * 重载供基数排序测试使用
+	 * @param sub 待排序数组
+	 */
+	public static void bubbleSort(int[] sub) {
+		for (int i = 0; i < sub.length - 1; i++) {
+			boolean flag = false; // 用于判断此趟比较有没有发生交换
+			for (int j = 0; j < sub.length - 1 - i; j++) {
+				if (sub[j] > sub[j + 1]) {
+					// 交换
+					int tmp = sub[j];
+					sub[j] = sub[j + 1];
+					sub[j + 1] = tmp;
+					flag = true;
+				}
+			}
+			if (!flag) {
+				break;
+			}
+		}
+	}
 	
 }
