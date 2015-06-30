@@ -103,7 +103,7 @@ public class TreeChild<E> {
 		return nodes[0];
 	}
 	
-	// 返回指定节点（非叶子节点）的所有子节点
+	// 返回指定节点（非叶子节点）的所有子节点---只需遍历子节点链
 	public List<Node<E>> children(Node<E> parent) {
 		List<Node<E>> list = new ArrayList<>();
 		SonNode next = parent.first;
@@ -123,6 +123,25 @@ public class TreeChild<E> {
 				return nodes[next.pos];
 			}
 			next = next.next;
+		}
+		return null;
+	}
+	
+	// 根据子节点获取父节点
+	public Node<E> parent(Node<E> child) {
+		for (int i = 0; i < treeSize; i++) {
+			if (nodes[i] != null) {
+				// 有子节点则遍历子节点找到相对应的父节点
+				if (nodes[i].first != null) {
+					SonNode next = nodes[i].first;
+					while (next != null) {
+						if (nodes[next.pos] == child) {
+							return nodes[i];				// 返回的是这个子节点链的父节点
+						}
+						next = next.next;
+					}
+				}
+			}
 		}
 		return null;
 	}
