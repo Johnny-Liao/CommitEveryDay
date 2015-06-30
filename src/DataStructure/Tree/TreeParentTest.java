@@ -2,6 +2,7 @@ package DataStructure.Tree;
 
 import java.util.List;
 
+// ²âÊÔTreeParentµÄ¹¦ÄÜ
 public class TreeParentTest {
 	
 	public static void main(String[] args) {
