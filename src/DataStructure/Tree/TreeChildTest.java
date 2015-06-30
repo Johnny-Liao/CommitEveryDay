@@ -25,5 +25,8 @@ public class TreeChildTest {
 		tc.addNode("节点4", childs.get(0));
 		
 		System.out.println("深度：" + tc.deep());
+		
+		System.out.println(tc.getChildForIndex(root, 2));
+		System.out.println(tc.getChildForIndex(childs.get(0), 0));
 	}
 }
