@@ -6,6 +6,7 @@ import DataStructure.Tree.ThreeLinkBinTree.TreeNode;
 
 public class ThreeLinkBinTreeTest {
 
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		ThreeLinkBinTree<String> tbt = new ThreeLinkBinTree<>("root");
 		
