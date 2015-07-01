@@ -47,6 +47,7 @@ public class ThreeLinkBinTreeTest {
 		System.out.println("root.left.right.parent():" + tbt.parent(node4));
 		System.out.println("is empty? " + tbt.empty());
 		System.out.println("root:" + tbt.root());
+//		System.out.println(tbt.parent(tbt.root()));
 		
 	}
 }

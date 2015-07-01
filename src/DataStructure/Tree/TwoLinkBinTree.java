@@ -26,6 +26,11 @@ public class TwoLinkBinTree<E> {
 			this.left = left;
 			this.right = right;
 		}
+		
+		@Override
+		public String toString() {
+			return (String) data;
+		}
 	}
 
 	private TreeNode root;
@@ -72,6 +77,14 @@ public class TwoLinkBinTree<E> {
 		return root;
 	}
 	
+	/**
+	 * 返回指定节点(非根节点)的父节点
+	 * @param data 指定节点
+	 * @return 指定节点的父节点
+	 */
+	public TreeNode parent(TreeNode data) {
+		
+	}
 /*	// 返回指定节点(非根节点)的父节点
 	public E parent(TreeNode data) {
 		if (data == root())

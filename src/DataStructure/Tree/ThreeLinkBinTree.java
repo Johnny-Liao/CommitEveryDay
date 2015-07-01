@@ -91,6 +91,8 @@ public class ThreeLinkBinTree<E> {
 	// 访问指定节点（非根节点）的父节点
 	@SuppressWarnings("unchecked")
 	public E parent(TreeNode node) {
+		if (node == root())
+			throw new RuntimeException("节点为根节点，没有父节点");
 		if (node == null)
 			throw new RuntimeException("节点为空，无法访问父节点");
 		return (E) node.parent.data;
