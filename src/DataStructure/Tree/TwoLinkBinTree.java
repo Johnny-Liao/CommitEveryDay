@@ -80,11 +80,37 @@ public class TwoLinkBinTree<E> {
 	/**
 	 * 返回指定节点(非根节点)的父节点
 	 * @param data 指定节点
-	 * @return 指定节点的父节点
+	 * @return 指定节点的父节点 或 null
 	 */
-	public TreeNode parent(TreeNode data) {
+	public TreeNode parent(TreeNode node) {
+		if (node == null)
+			throw new RuntimeException("节点为空，无法访问父节点");
+		if (node == root())
+			throw new RuntimeException("节点为根节点，没有父节点");
 		
+		return parent(root, node);	// 递归从root子树（整棵树）中查找node的父节点
 	}
+	
+	/**
+	 * 递归算法：递归从子树中找出节点的父节点
+	 * @param subTree 需递归查找的子树
+	 * @param node 查找的节点
+	 * @return 节点的父节点
+	 */
+	private TreeNode parent(TreeNode subTree, TreeNode node) {
+		if (subTree == null)
+			return null;
+		if (subTree.left == node || subTree.right == node)
+			return subTree;		// 找到返回父节点地址
+		TreeNode p;
+		// 先从左子树找，没找到从右子树找
+		if ((p = parent(subTree.left, node)) != null)
+			return p;
+		else 
+			return parent(subTree.right, node);
+	}
+
+// +++++开始设计的递归算法，但是没把子树传入，导致总是会返回根节点.----------设计上的失败，保留，起警示作用-----------------
 /*	// 返回指定节点(非根节点)的父节点
 	public E parent(TreeNode data) {
 		if (data == root())
@@ -93,8 +119,8 @@ public class TwoLinkBinTree<E> {
 		// 需要遍历二叉树来找到父节点--此处采用前序遍历来查找父节点
 		return preIteratorToFindParent(data);
 	}
-	*/
-/*	TreeNode tmpNode = null;
+	
+	TreeNode tmpNode = null;
 	boolean tag = true;
 	TreeNode tmp = null;
 	E result;
@@ -126,6 +152,7 @@ public class TwoLinkBinTree<E> {
 //		return (E) tmpNode.data;
 		return result;
 	}*/
+// +++++开始设计的递归算法，但是没把子树传入，导致总是会返回根节点.----------设计上的失败，保留，起警示作用-----------------
 	
 	// 返回指定节点的左子节点，不存在返回null
 	@SuppressWarnings("unchecked")
