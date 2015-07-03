@@ -17,12 +17,12 @@ public class SortBinTreeTest {
 		tree.add(15);
 		tree.add(30);
 		
-/*		tree.remove(20);
-		tree.add(20);*/
+		tree.remove(20);
+		tree.add(20);
 		
 		System.out.println("广度优先遍历查看：");
 		System.out.println(tree.breadthFirst());
-		tree.remove(20);
+		tree.remove(30);
 		System.out.println(tree.breadthFirst());
 		
 	/*	System.out.println("中序遍历查看：");

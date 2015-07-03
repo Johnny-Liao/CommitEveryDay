@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
-
 /**
  * 排序二叉树的实现
  * 
@@ -102,7 +101,7 @@ public class SortBinTree<T extends Comparable> {
 	public void remove(T ele) {
 		// 获取要删除的节点
 		Node target = getNode(ele);
-		
+
 		if (target == null)
 			return;
 
@@ -145,9 +144,7 @@ public class SortBinTree<T extends Comparable> {
 			if (target == root) {
 				root = target.left;
 			} else {
-				
-				
-				
+
 				/**
 				 * 
 				 * 
@@ -155,10 +152,11 @@ public class SortBinTree<T extends Comparable> {
 				 * 
 				 * 
 				 */
-				
-				
-				
-				
+				// 只有一个左节点
+//				if (target.left.left == null) {
+//					
+//				}
+
 				// 要删除的节点是父节点的左子节点
 				if (target == target.parent.left) {
 					// 让target的父节点的left（左指针）指向target的左子树
@@ -169,66 +167,72 @@ public class SortBinTree<T extends Comparable> {
 				}
 				// 让target的左子树的parent（父指针）指向target的父节点
 				target.left.parent = target.parent;
-				
-				target = null;
-				
+
+//				target = null;
+
 				System.out.println(target + "+++++++++");
-//				System.out.println(target.left + "+++++++++");
-//				System.out.println(target.right + "+++++++++");
+				// System.out.println(target.left + "+++++++++");
+				// System.out.println(target.right + "+++++++++");
 				// notice don't forget
 			}
 		}
 		// =====要删除的节点既有左子树，又有右子树=====
+		/**
+		 * 在左子树中找到最大节点来代替要删除的节点，记住：要判断左子树的分类情况：只是一个节点，左子树没有右节点（还是左子树的根节点最大），
+		 * 左子树有右节点（最右节点值最大）。
+		 */
 		else {
 			if (target == root) {
 				throw new RuntimeException("移除目标节点为根节点，且有左、右子树，移除根后将变为森林，此处不做处理");
 			}
 			// 用leftMaxNode记录target节点的左子树中最大的节点
 			Node leftMaxNode = target.left;
-			// 找到最大值
-			while (leftMaxNode.right != null) {
-				leftMaxNode = leftMaxNode.right;
-			}
 			
-			// --------------------------------------------------------------------
-			// 记住：用左子树中最大值来替换target时，可能左子树只是左节点（只有左节点，不形成子树）本身
-			// 或左子树的根节点没有右节点，此时最大的节点也还是左子树的根节点=======要炸
-			// --------------------------------------------------------------------
-			/**
-			 * 
-			 * 
-			 * 可能还有错，明日再战
-			 * 
-			 * 
-			 * 
-			 */
-			// 原子树中删除leftMaxNode==不形成子树时不用删除
-			if (target.left != leftMaxNode) {		
-				leftMaxNode.parent.right = null;
-			}
-			
-			// 左子树的根节点没有右节点，最大节点为左子树的根节点+++++++++
-			if (leftMaxNode.right == null && leftMaxNode.left != null) {
+			// 先在此判断target.left的类型再做处理
+
+			// 只是一个节点，没有形成子树
+			if (leftMaxNode.left == null && leftMaxNode.right == null) {
+				// 要删除的节点是父节点的左子节点
+				if (target == target.parent.left) {
+					target.parent.left = leftMaxNode;
+				} else {
+					target.parent.right = leftMaxNode;
+				}
+				leftMaxNode.parent = target.parent;
 				leftMaxNode.right = target.right;
-				target.left = leftMaxNode.left;
-			}
-			
-			leftMaxNode.parent = target.parent;
-			// 要删除的节点是父节点的左子节点
-			if (target == target.parent.left) {
-				target.parent.left = leftMaxNode;
-			} else {
-				target.parent.right = leftMaxNode;
-			}
-			// 左子树最大节点为leftMaxNode本身时==即不形成子树时==
-			if (target.left == leftMaxNode) {			
 				leftMaxNode.left = null;
-			} else {
-				leftMaxNode.left = target.left;
 			}
-			leftMaxNode.right = target.right;
-			// notice don't forget
-			target.parent = target.left = target.right = null;
+			// 有左字节点，没有右子节点,此时还是初始的leftMaxNode最大
+			else if (leftMaxNode.left != null && leftMaxNode.right == null) {
+				// 要删除的节点是父节点的左子节点
+				if (target == target.parent.left) {
+					target.parent.left = leftMaxNode;
+				} else {
+					target.parent.right = leftMaxNode;
+				}
+				leftMaxNode.parent = target.parent;
+				leftMaxNode.right = target.right;
+			}
+			// 都不为空和只有右不为空一样
+			else {
+				// 找到最大值
+				while (leftMaxNode.right != null) {
+					leftMaxNode = leftMaxNode.right;
+				}
+				leftMaxNode.parent.right = null;
+				// 要删除的节点是父节点的左子节点
+				if (target == target.parent.left) {
+					target.parent.left = leftMaxNode;
+				} else {
+					target.parent.right = leftMaxNode;
+				}
+				leftMaxNode.parent = target.parent;
+				leftMaxNode.left = target.left;
+				leftMaxNode.right = target.right;
+				// notice don't forget
+				target.parent = target.left = target.right = null;
+			}
+
 		}
 
 	}
@@ -258,7 +262,7 @@ public class SortBinTree<T extends Comparable> {
 		}
 		return null;
 	}
-	
+
 	// 广度优先遍历
 	public List<Node> breadthFirst() {
 		List<Node> list = new ArrayList<>();
@@ -268,18 +272,18 @@ public class SortBinTree<T extends Comparable> {
 		}
 		while (!queue.isEmpty()) {
 			// 将该队列“队尾”元素添加到List中
-			list.add(queue.peek());		// 加入并不删除队列中元素
-			Node p = queue.poll();		// 取出并删除队列中元素
+			list.add(queue.peek()); // 加入并不删除队列中元素
+			Node p = queue.poll(); // 取出并删除队列中元素
 			if (p.left != null) {
 				queue.offer(p.left);
-			} 
+			}
 			if (p.right != null) {
 				queue.offer(p.right);
 			}
 		}
 		return list;
 	}
-	
+
 	// 中序遍历
 	public List<Node> inIterator() {
 		return inIterator(root);
@@ -289,19 +293,19 @@ public class SortBinTree<T extends Comparable> {
 		List<Node> list = new ArrayList<Node>();
 
 		// 左
-		if(node.left != null) {
+		if (node.left != null) {
 			list.addAll(inIterator(node.left));
 		}
-		
+
 		// 根
 		list.add(node);
-		
+
 		// 右
-		if(node.right != null) {
+		if (node.right != null) {
 			list.addAll(inIterator(node.right));
 		}
-		
+
 		return list;
 	}
-	
+
 }
