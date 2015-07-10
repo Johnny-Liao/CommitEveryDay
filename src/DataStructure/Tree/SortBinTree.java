@@ -127,6 +127,9 @@ public class SortBinTree<T extends Comparable> {
 			if (target == root) {
 				root = target.right;
 			} else {
+				/**
+				 * 同下
+				 */
 				// 要删除的节点是父节点的左子节点
 				if (target == target.parent.left) {
 					// 让target的父节点的left（左指针）指向target的右子树
@@ -137,6 +140,7 @@ public class SortBinTree<T extends Comparable> {
 				}
 				// 让target的右子树的parent（父指针）指向target的父节点
 				target.right.parent = target.parent;
+//				target.parent = target.right = null;
 			}
 		}
 		// -----要删除的节点只有左节点-----
@@ -146,17 +150,8 @@ public class SortBinTree<T extends Comparable> {
 			} else {
 
 				/**
-				 * 
-				 * 
-				 * 有错，明日再战
-				 * 
-				 * 
+				 * 有错，遗留一个问题，有待解决，现在忙于学习新知识先。
 				 */
-				// 只有一个左节点
-//				if (target.left.left == null) {
-//					
-//				}
-
 				// 要删除的节点是父节点的左子节点
 				if (target == target.parent.left) {
 					// 让target的父节点的left（左指针）指向target的左子树
@@ -167,13 +162,18 @@ public class SortBinTree<T extends Comparable> {
 				}
 				// 让target的左子树的parent（父指针）指向target的父节点
 				target.left.parent = target.parent;
-
+				
+				/** 现在出错情况是：已经把目标节点的子树指向目标节点的父节点
+				 * 					和把目标节点的父节点的子指针指向了目标节点的子节点
+				 * 				但是目标节点的指针依然指向父节点及子树还不能轻易把这两个指针直接置空（会把现有位置上的节点去掉）。
+				 */
+//				target.parent = target.left = null;
 //				target = null;
-
+				System.out.println(target.parent.right);
+				System.out.println(target.left.parent);
+//				target.left = null;
+				System.out.println(target.left);
 				System.out.println(target + "+++++++++");
-				// System.out.println(target.left + "+++++++++");
-				// System.out.println(target.right + "+++++++++");
-				// notice don't forget
 			}
 		}
 		// =====要删除的节点既有左子树，又有右子树=====
