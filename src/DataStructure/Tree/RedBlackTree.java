@@ -92,13 +92,13 @@ public class RedBlackTree<T extends Comparable> {
 		x.color = RED;
 		// 过滤掉不需要修复的情况
 		while (x != null && x != root && x.parent.color != RED) {
-			// 如果newNode的父节点是其父节点的左子节点
+			// 如果当前节点的父节点是祖父节点的左子节点
 			if (parentOf(x) == leftOf(parentOf(x))) {
 				// get the uncle node
 				Node uncle = rightOf(parentOf(x));
 				// if uncle node's color == red
 				/**
-				 * !!!maybe have bug notice uncle is not null uncle != null &&
+				 * colorOf默认返回BLACK所以不存在空的情况
 				 */
 				if (colorOf(uncle) == RED) {
 					setColor(parentOf(x), BLACK);
@@ -107,46 +107,39 @@ public class RedBlackTree<T extends Comparable> {
 					// recursive the method to verify the grandfather node
 					x = parentOf(parentOf(x));
 				}
-				// uncle node is black
+				// uncle node's color is black , when the uncle is null the uncle's color is still BLACK
 				else {
-					// x is parent's right-son node
+					// x is parent's right-child node
 					if (x == rightOf(parentOf(x))) {
 						// rotate left x's parent node
 						x = parentOf(x);
 						rotateLeft(x);
 					}
 					/**
-					 * !!! maybe have bug 可以测试 x is not parent's right-son node
+					 * 不管是不是右孩子都需要这步处理
 					 */
 					setColor(parentOf(x), BLACK);
 					setColor(parentOf(parentOf(x)), RED);
 					rotateRight(parentOf(parentOf(x)));
 				}
 			}
-			// 如果newNode的父节点是其父节点的右子节点
+			// 如果当前节点的父节点是祖父节点的右子节点---和上面仅仅操作节点相反，步骤一样
 			else {
 				// get the uncle node
 				Node uncle = rightOf(parentOf(x));
 				// uncle node's color is red
-				/**
-				 * the same as up , you can change it
-				 */
 				if (colorOf(uncle) == RED) {
 					setColor(parentOf(x), BLACK);
 					setColor(rightOf(parentOf(x)), BLACK);
 					setColor(parentOf(parentOf(x)), RED);
-					// recursive the method to verify the grandfather node
 					x = parentOf(parentOf(x));
 				}
-				// uncle node's is black
+				// uncle node's color is black
 				else {
-					if (x == leftOf(parentOf(x))) {
+					if (x == leftOf(parentOf(x))) {		//注意反向
 						x = parentOf(x);
 						rotateRight(x);
 					}
-					/**
-					 * !!! maybe have bug
-					 */
 					setColor(parentOf(x), BLACK);
 					setColor(parentOf(parentOf(x)), RED);
 					rotateLeft(parentOf(parentOf(x)));
