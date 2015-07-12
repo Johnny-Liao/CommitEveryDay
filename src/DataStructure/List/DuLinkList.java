@@ -68,8 +68,8 @@ public class DuLinkList<T> {
 	// get the index by element
 	public int locate(T ele) {
 		Node current = header;
-		for (int i = 0; i <= size&& current != null; i++, current = current.next) 
-			if (current.equals(ele))
+		for (int i = 0; i < size && current != null; i++, current = current.next) 
+			if (current.data.equals(ele))
 				return i;
 		return -1;
 	}
@@ -97,7 +97,7 @@ public class DuLinkList<T> {
 	}
 
 	// 尾插法为链表添加新节点
-	private void add(T ele) {
+	public void add(T ele) {
 		if (header == null) {
 			header = new Node(ele, null, null);
 			tail = header;
