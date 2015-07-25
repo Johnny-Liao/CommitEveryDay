@@ -56,7 +56,7 @@ public class QuickSort_MyTest {
 		DataWrap[] data = {
 				new DataWrap(21, ""),
 				new DataWrap(30, ""),
-				new DataWrap(49, ""),
+				new DataWrap(49, "*"),
 				new DataWrap(30, "*"),
 				new DataWrap(16, ""),
 				new DataWrap(19, ""),
