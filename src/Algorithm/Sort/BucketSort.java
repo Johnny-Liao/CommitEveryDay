@@ -3,9 +3,11 @@ package Algorithm.Sort;
 import java.util.Arrays;
 
 /**
- * 
+ * 注：这是计数排序不是桶排序！
+ * 选一本好的教科书是前提，这明明是计数排序，在《疯狂java程序员的基本修养》中竟然把它当成桶排序来用，害死人不偿命啊！！！
+ * 开始以为这书挺好的，会带你研读源码，可是在发现好多错误之后作者有时真是误人子弟啊！
  * @author JohnnyLiao
- *
+ * @date 2015年7月26日 下午3:04:23
  */
 public class BucketSort implements Sort {
 
@@ -14,6 +16,7 @@ public class BucketSort implements Sort {
 //		bucketSort(data);
 	}
 
+	// 计数排序
 	public static void bucketSort(DataWrap[] data, int min, int max) {
 		System.out.println("通排序");
 		int arrayLength = data.length;
