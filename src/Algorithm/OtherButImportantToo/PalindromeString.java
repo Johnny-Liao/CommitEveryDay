@@ -13,6 +13,10 @@ public class PalindromeString {
      * @return ÅÐ¶Ï½á¹ûbooleanÖµ
      */
     public boolean isPalindrom(String s) {
+        // don't forget
+        if (s == null || "".equals(s))
+            return false;
+
         int begin = 0;
         int end = s.length() - 1;
         while (begin < end) {
