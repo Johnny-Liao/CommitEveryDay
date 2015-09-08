@@ -10,7 +10,7 @@ package Algorithm.IntroductionToAlgorithms.DynamicProgramming;
  */
 public class CutRod {
 
-    // wrong
+    // 自底向上
     public int buttomUpCutRod(int n, int[] p) {
         int[] r = new int[n  + 1];    // 为了容纳长度为n的价格
 		r[0] = 0;
