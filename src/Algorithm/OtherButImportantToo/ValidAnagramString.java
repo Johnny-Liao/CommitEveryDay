@@ -42,8 +42,8 @@ public class ValidAnagramString {
         String a = "bca";
         String b = "abc";
         boolean result = vas.isAnagram(a, b);
-        boolean result2 = vas.isAnagram("", "2");
         System.out.println(result);
+        boolean result2 = vas.isAnagram("", "2");
         System.out.println(result2);
     }
 }
