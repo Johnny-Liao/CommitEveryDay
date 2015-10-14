@@ -9,12 +9,11 @@ import java.util.ArrayList;
  * Created by johnny on 15-10-11.
  */
 public class PrintListFromTailToHead {
+
     static ArrayList<Integer> listVal = new ArrayList<>();
 
     // 从尾到头打印链表--不改变链表结构
     public static ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
-        if (listNode == null)
-            return listVal;
         if (listNode != null) {
             if (listNode.next != null) {
                 printListFromTailToHead(listNode.next);
