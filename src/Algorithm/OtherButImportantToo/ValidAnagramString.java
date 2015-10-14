@@ -15,8 +15,10 @@ public class ValidAnagramString {
 
     // 时间复杂度O(n), 空间复杂度O(n)
     public boolean isAnagram(String s, String t) {
+        if (s == null || t == null)
+            return false;
 
-        List list = new ArrayList();
+        List<Character> list = new ArrayList<>();
         for (int i = 0; i < s.length(); i++) {
             list.add(s.charAt(i));
         }
@@ -40,6 +42,8 @@ public class ValidAnagramString {
         String a = "bca";
         String b = "abc";
         boolean result = vas.isAnagram(a, b);
+        boolean result2 = vas.isAnagram("", "2");
         System.out.println(result);
+        System.out.println(result2);
     }
 }
