@@ -32,16 +32,16 @@ public class RotateLinkList {
      * 将链表从起点start(inclusive)到终点end(exclusive)的节点反转
      *
      * @param start 链表的起点(包括)
-     * @param end   链表的终点(不包括)
+     * @param end   链表的终点(不包括)--这个场景需要，直接反转单链表为null
      * @return 反转后链表的头节点
      */
     private static ListNode rotateList(ListNode start, ListNode end) {
         ListNode pre = null;
         ListNode cur = start;
-        ListNode next = cur.next;
+        ListNode next = null;
 
-        // 思路：不断的把第一个节点的后面的节点放到第一的位置上从而实现逆序。
-        // 如： 1->2->3->4  ===   2->1->3->4    ==== 3->2->1->4   === 4->3->2->1
+        // 思路：不断的把后面的节点指向前面一个，最后输出尾节点。
+        // 如： 1<-2 3->4  ===   1<-2<-3 4    ==== 1<-2<-3<-4
         while (cur != end) {
             next = cur.next;
             cur.next = pre;
