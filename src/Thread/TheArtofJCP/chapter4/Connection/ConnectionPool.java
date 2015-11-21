@@ -1,4 +1,4 @@
-package Thread.TheArtofJCP.chapter4;
+package Thread.TheArtofJCP.chapter4.Connection;
 
 import java.sql.Connection;
 import java.util.LinkedList;
@@ -21,6 +21,7 @@ public class ConnectionPool {
     // 释放连接
     public void releaseConnection(Connection connection) {
         synchronized (pool) {
+            // 释放连接即把连接添加进连接池，然后通知所有等待线程，使其可以获取连接
             pool.addLast(connection);
             pool.notifyAll();
         }
