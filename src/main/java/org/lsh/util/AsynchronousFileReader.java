@@ -35,7 +35,7 @@ public class AsynchronousFileReader {
     }
 
     /**
-     * 提供多线程读取文件
+     * 提供多线程异步读取多个文件
      *
      * @param filePath 文件路径数组
      */
@@ -102,8 +102,6 @@ public class AsynchronousFileReader {
             fileReader = new FileReader(filePath);
             bufferedReader = new BufferedReader(fileReader);
             String oneLineLog;
-            int countLine = 0;
-            /*********************************现有问题：不能读取不断增长的文件*******************/
             while ((oneLineLog = bufferedReader.readLine()) != null) {
                 try {
                     // 添加进阻塞队列，提供多线程异步操作
@@ -145,57 +143,13 @@ public class AsynchronousFileReader {
         return false;
     }
 
-    /**
-     * 使用NIO通过路径名来读取文件
-     *
-     * @param filePath 文件路径
-     * @return 文件中所有字符串
-     */
-    @Deprecated
-    public String readLogByPathWithNIO(String filePath) {
-        FileInputStream fis = null;
-        FileChannel channel = null;
-        ByteBuffer buffer;
-        StringBuffer stringBuffer = null;
-        try {
-            fis = new FileInputStream(filePath);
-            channel = fis.getChannel();
-            buffer = ByteBuffer.allocate(1024 * 4);
-
-            stringBuffer = new StringBuffer();
-            while (channel.read(buffer) != -1) {
-                Buffer bf = buffer.flip();
-                byte[] bt = buffer.array();
-
-                stringBuffer.append(new String(bt, 0, bf.limit()));
-
-                buffer.clear();
-            }
-            System.out.println(stringBuffer);
-
-        } catch (FileNotFoundException e) {
-            logger.error("Read File Not Found.", e);
-        } catch (IOException e) {
-            logger.error("readLogByPath IOException.", e);
-        } finally {
-            try {
-                channel.close();
-                fis.close();
-            } catch (IOException e) {
-                logger.error("Close channel or file input stream exception.", e);
-            }
-        }
-        return stringBuffer.toString();
-    }
-
     public static void main(String[] args) {
 
+        /**
+         * 异步读取多个文件
+         */
         String bashPath = "D:\\develop_tools\\eclipse_workspace\\logs\\";
-
-        String[] logs = {/*bashPath + "aaa"};*/
-
-                bashPath + "esearch.log.20151119000000",
-                bashPath + "GetTimeOutQuery.sh",
+        String[] logs = {
                 bashPath + "aaa",
                 bashPath + "bbb",
                 bashPath + "ccc",
@@ -205,9 +159,7 @@ public class AsynchronousFileReader {
         };
 
         AsynchronousFileReader logFileReader = new AsynchronousFileReader(logs);
-
         System.out.println("当前线程数： " + logFileReader.threadHolder + " 最大线程数：" + logFileReader.maxThreadHolder);
-
         while (true) {
             try {
                 String logString;
