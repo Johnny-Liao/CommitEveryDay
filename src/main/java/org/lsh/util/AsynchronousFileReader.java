@@ -2,32 +2,35 @@ package org.lsh.util;
 
 import org.apache.log4j.Logger;
 
-import java.io.*;
-import java.nio.Buffer;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
-import java.util.concurrent.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 /**
- * Ê¹ÓÃ¶àÏß³ÌÒì²½¶ÁÈ¡ÎÄ¼ş£¬Ò»ÌõÏß³Ì¶ÁÈ¡Ò»¸öÎÄ¼ş
+ * ä½¿ç”¨å¤šçº¿ç¨‹å¼‚æ­¥è¯»å–æ–‡ä»¶ï¼Œä¸€æ¡çº¿ç¨‹è¯»å–ä¸€ä¸ªæ–‡ä»¶
  * Created by Johnny Liao on 2015/12/15.
  */
 public class AsynchronousFileReader {
 
     Logger logger = Logger.getLogger(AsynchronousFileReader.class);
     /**
-     * ´ÓÎÄ¼şÖĞ¶ÁÈ¡µÄÈÕÖ¾×Ö·û´®´æÈë´ËBlockingQueueÌá¹©¶àÏß³ÌÒì²½·şÎñ¡£
+     * ä»æ–‡ä»¶ä¸­è¯»å–çš„æ—¥å¿—å­—ç¬¦ä¸²å­˜å…¥æ­¤BlockingQueueæä¾›å¤šçº¿ç¨‹å¼‚æ­¥æœåŠ¡ã€‚
      */
-    public BlockingQueue<String> logStringQueue = new LinkedBlockingQueue<String>(3600 * 1024);           // 1M Ô¼µÈÓÚ 3600ĞĞ
+    public BlockingQueue<String> logStringQueue = new LinkedBlockingQueue<String>(3600 * 1024);           // 1M çº¦ç­‰äº 3600è¡Œ
 
     private int threadHolder = 1; // default one thread.
-    private int maxThreadHolder = Runtime.getRuntime().availableProcessors() * 2; // ×î´óÏß³ÌÊıÎª´¦ÀíÆ÷ºËĞÄÊıµÄÁ½±¶
+    private int maxThreadHolder = Runtime.getRuntime().availableProcessors() * 2; // æœ€å¤§çº¿ç¨‹æ•°ä¸ºå¤„ç†å™¨æ ¸å¿ƒæ•°çš„ä¸¤å€
     private ExecutorService fixedThreadPool = null;
 
     /**
-     * Ö»¶ÁÈ¡µ¥¸öÎÄ¼ş
+     * åªè¯»å–å•ä¸ªæ–‡ä»¶
      *
-     * @param filePath µ¥¸öÎÄ¼şÂ·¾¶
+     * @param filePath å•ä¸ªæ–‡ä»¶è·¯å¾„
      */
     public AsynchronousFileReader(String filePath) {
         fixedThreadPool = Executors.newFixedThreadPool(this.threadHolder);
@@ -35,9 +38,9 @@ public class AsynchronousFileReader {
     }
 
     /**
-     * Ìá¹©¶àÏß³ÌÒì²½¶ÁÈ¡¶à¸öÎÄ¼ş
+     * æä¾›å¤šçº¿ç¨‹å¼‚æ­¥è¯»å–å¤šä¸ªæ–‡ä»¶
      *
-     * @param filePath ÎÄ¼şÂ·¾¶Êı×é
+     * @param filePath æ–‡ä»¶è·¯å¾„æ•°ç»„
      */
     public AsynchronousFileReader(String[] filePath) {
         int threadHolder = filePath.length;
@@ -52,18 +55,18 @@ public class AsynchronousFileReader {
 
 
     /**
-     * ¸ù¾İÂ·¾¶Ãû¶ÁÈ¡µ¥¸öµÄÎÄ¼ş£¬¶àÏß³Ì´¦Àí²¢·ÅÈëBlockingQueue¡£
+     * æ ¹æ®è·¯å¾„åè¯»å–å•ä¸ªçš„æ–‡ä»¶ï¼Œå¤šçº¿ç¨‹å¤„ç†å¹¶æ”¾å…¥BlockingQueueã€‚
      *
-     * @param filePath ¶ÁÈ¡µÄÎÄ¼şÂ·¾¶
+     * @param filePath è¯»å–çš„æ–‡ä»¶è·¯å¾„
      */
     public void read(String filePath) {
         this.fixedThreadPool.execute(new FileReaderWithSingleThread(filePath));
     }
 
     /**
-     * ¸ù¾İÂ·¾¶Ãû¶ÁÈ¡¶à¸öµÄÎÄ¼ş£¬¶àÏß³Ì´¦Àí²¢·ÅÈëBlockingQueue¡£
+     * æ ¹æ®è·¯å¾„åè¯»å–å¤šä¸ªçš„æ–‡ä»¶ï¼Œå¤šçº¿ç¨‹å¤„ç†å¹¶æ”¾å…¥BlockingQueueã€‚
      *
-     * @param filePath ¶ÁÈ¡µÄÎÄ¼şÂ·¾¶
+     * @param filePath è¯»å–çš„æ–‡ä»¶è·¯å¾„
      */
     public void read(String[] filePath) {
         for (int i = 0; i < filePath.length; i++) {
@@ -73,7 +76,7 @@ public class AsynchronousFileReader {
 
 
     /**
-     * Ò»ÌõÏß³Ì´¦Àíµ¥¸öÎÄ¼şµÄ¶ÁÈ¡¹¤×÷
+     * ä¸€æ¡çº¿ç¨‹å¤„ç†å•ä¸ªæ–‡ä»¶çš„è¯»å–å·¥ä½œ
      */
     class FileReaderWithSingleThread implements Runnable {
 
@@ -91,9 +94,9 @@ public class AsynchronousFileReader {
 
 
     /**
-     * °´ĞĞ¶ÁÈ¡ÎÄ¼ş
+     * æŒ‰è¡Œè¯»å–æ–‡ä»¶
      *
-     * @param filePath ÎÄ¼şÂ·¾¶
+     * @param filePath æ–‡ä»¶è·¯å¾„
      */
     public void readLogByPath(String filePath) {
         FileReader fileReader = null;
@@ -104,7 +107,7 @@ public class AsynchronousFileReader {
             String oneLineLog;
             while ((oneLineLog = bufferedReader.readLine()) != null) {
                 try {
-                    // Ìí¼Ó½ø×èÈû¶ÓÁĞ£¬Ìá¹©¶àÏß³ÌÒì²½²Ù×÷
+                    // æ·»åŠ è¿›é˜»å¡é˜Ÿåˆ—ï¼Œæä¾›å¤šçº¿ç¨‹å¼‚æ­¥æ“ä½œ
                     if (!logStringQueue.offer(oneLineLog, 1000, TimeUnit.MICROSECONDS)) {
                         logger.error("This line is not read : " + oneLineLog);
                     }
@@ -132,8 +135,8 @@ public class AsynchronousFileReader {
     }
 
     /**
-     * ¶ÁÈ¡ÍêÎÄ¼şºó¹Ø±ÕÏß³Ì³Ø
-     * @return ¹Ø±Õ³É¹¦±êÊ¶
+     * è¯»å–å®Œæ–‡ä»¶åå…³é—­çº¿ç¨‹æ± 
+     * @return å…³é—­æˆåŠŸæ ‡è¯†
      */
     public boolean destroyThreadPool() {
         if (!fixedThreadPool.isShutdown()) {
@@ -146,7 +149,7 @@ public class AsynchronousFileReader {
     public static void main(String[] args) {
 
         /**
-         * Òì²½¶ÁÈ¡¶à¸öÎÄ¼ş
+         * å¼‚æ­¥è¯»å–å¤šä¸ªæ–‡ä»¶
          */
         String bashPath = "D:\\develop_tools\\eclipse_workspace\\logs\\";
         String[] logs = {
@@ -159,11 +162,11 @@ public class AsynchronousFileReader {
         };
 
         AsynchronousFileReader logFileReader = new AsynchronousFileReader(logs);
-        System.out.println("µ±Ç°Ïß³ÌÊı£º " + logFileReader.threadHolder + " ×î´óÏß³ÌÊı£º" + logFileReader.maxThreadHolder);
+        System.out.println("å½“å‰çº¿ç¨‹æ•°ï¼š " + logFileReader.threadHolder + " æœ€å¤§çº¿ç¨‹æ•°ï¼š" + logFileReader.maxThreadHolder);
         while (true) {
             try {
                 String logString;
-                if ((logString = logFileReader.logStringQueue.poll(2000, TimeUnit.MICROSECONDS)) != null) {  // ´ÓBlockingQueueÖĞÈ¡²»µ½Êı¾İÊ±µÈ´ı2s,»¹È¡²»µ½ÔòÈÏÎª¶ÁÈ¡Íê±Ï£¬ÍË³ö¡£
+                if ((logString = logFileReader.logStringQueue.poll(2000, TimeUnit.MICROSECONDS)) != null) {  // ä»BlockingQueueä¸­å–ä¸åˆ°æ•°æ®æ—¶ç­‰å¾…2s,è¿˜å–ä¸åˆ°åˆ™è®¤ä¸ºè¯»å–å®Œæ¯•ï¼Œé€€å‡ºã€‚
                     System.out.println(logString);
                 } else {
                     System.out.println("QUIT AND DestroyThreadPool");
