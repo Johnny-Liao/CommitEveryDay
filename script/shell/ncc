@@ -1,0 +1,27 @@
+#! /bin/bash
+
+#########################################################
+# 功能: 一个简单的脚本
+# 日期 : 2016-07-06
+#########################################################
+set -e
+port=5858
+if [ $# -lt 1 ]; then
+    echo `basename $0`" <port> file"
+    exit 1
+fi
+
+file=$1
+
+if [ $# -eq 2 ];then
+    port=$1
+    file=$2
+fi
+if [ ! -f $file ];then
+    echo "file[$file] not found"
+    exit 2
+fi
+ip=`ifconfig en0 |grep -w inet | awk '{print $2}'`
+echo Please Receive :
+echo -e "\t nc $ip $port > `basename $file`"
+nc -l $ip $port  < $file
