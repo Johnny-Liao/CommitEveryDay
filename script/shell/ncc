@@ -22,6 +22,11 @@ if [ ! -f $file ];then
     exit 2
 fi
 ip=`ifconfig en0 |grep -w inet | awk '{print $2}'`
+if [ -z $ip ]; then
+	ip=`ifconfig en4 |grep -w inet | awk '{print $2}'`
+fi
+md5sum $file
 echo Please Receive :
-echo -e "\t nc $ip $port > `basename $file`"
+echo "nc $ip $port > `basename $file`" | pbcopy
+echo -e "\t nc $ip $port > `basename $file`" 
 nc -l $ip $port  < $file
