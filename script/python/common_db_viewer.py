@@ -49,8 +49,8 @@ table_name_list = [ v for in_dict in tables.as_dict() for k, v in in_dict.items(
 print 'All tables : {}'.format(table_name_list)
 
 # Get selected table
-table_name=''
-table_name=[ x for x in table_name_list if table_name_pattern in x ][0]
+table_name_match = [ x for x in table_name_list if table_name_pattern in x ]
+table_name = table_name_match[0] if table_name_match else ''
 if table_name == '':
     print 'Can\'t get {} in {}'.format(table_name_pattern, table_name_list)
     sys.exit(1)
